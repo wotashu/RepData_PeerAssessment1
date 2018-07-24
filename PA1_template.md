@@ -6,6 +6,13 @@ output:
 ---
 
 
+```r
+# set figure output to images/ folder
+knitr::opts_chunk$set(
+  fig.path = "images/"
+)
+```
+
 ## Loading and preprocessing the data
 
 
@@ -22,6 +29,10 @@ library(ggplot2)
 bydate <- aggregate(steps ~ date, data, FUN=sum, na.rm=TRUE)
 meansteps <- mean(bydate$steps)
 mediansteps <-median(bydate$steps)
+```
+
+
+```r
 p1 <- ggplot(data = bydate, aes(bydate$steps)) + 
     geom_histogram(bins=20) +
     geom_vline(aes(xintercept=mean(bydate$steps), color="mean"), size=1) +
@@ -32,7 +43,7 @@ p1 <- ggplot(data = bydate, aes(bydate$steps)) +
 print(p1)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+![](images/plot1-1.png)<!-- -->
 
 The mean of the total number of steps taken per day 
 is 10766.19.  
@@ -55,7 +66,7 @@ p2 <- ggplot(data=byinterval, aes(x=interval, y=steps)) + geom_line() +
 print(p2)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+![](images/plot2-1.png)<!-- -->
 
 The 5-minute interval containing the maximum number of steps is 
 835. 
@@ -91,7 +102,7 @@ p3 <- ggplot(data = bydate2, aes(bydate2$steps)) +
 grid.arrange(p1, p3)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](images/plot3-1.png)<!-- -->
 
 The impact on filling missing values with zeros is a decrease of the mean to
 9354.23 and the median to 10395
@@ -119,5 +130,5 @@ p5 <- ggplot(data=weekendgroup, aes(x=interval, y=steps)) + geom_line() +
 grid.arrange(p4, p5)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+![](images/plot4-1.png)<!-- -->
 

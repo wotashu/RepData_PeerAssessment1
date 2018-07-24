@@ -5,6 +5,12 @@ output:
     keep_md: true
 ---
 
+```{r}
+# set figure output to images/ folder
+knitr::opts_chunk$set(
+  fig.path = "images/"
+)
+```
 
 ## Loading and preprocessing the data
 
@@ -20,6 +26,9 @@ library(ggplot2)
 bydate <- aggregate(steps ~ date, data, FUN=sum, na.rm=TRUE)
 meansteps <- mean(bydate$steps)
 mediansteps <-median(bydate$steps)
+```
+
+```{r plot1}
 p1 <- ggplot(data = bydate, aes(bydate$steps)) + 
     geom_histogram(bins=20) +
     geom_vline(aes(xintercept=mean(bydate$steps), color="mean"), size=1) +
@@ -38,7 +47,7 @@ is `r mediansteps`.
 
 ## What is the average daily activity pattern?
 
-```{r}
+```{r plot2}
 byinterval <- aggregate(steps ~ interval, data, FUN=mean, na.rm=TRUE)
 maxpoint <- byinterval[byinterval$steps==max(byinterval$steps),]
 
@@ -61,7 +70,7 @@ The number of missing values is `r sum(is.na(data$steps))`.
 
 The strategy to use to fill the missing values is to replace the NA with 0.
 
-```{r}
+```{r plot3}
 library(grid)
 library(gridExtra)
 data2 <- data
@@ -88,7 +97,8 @@ The impact on filling missing values with zeros is a decrease of the mean to
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r}
+```{r plot4}
+
 library(timeDate)
 data2$daytype <- factor(isWeekday(data2$date), 
                          levels=c(TRUE, FALSE), 
